@@ -9,10 +9,10 @@ const char* _GenerateInfo(int lineNumber, const char* content, const char* fileN
 	const int size = 128;
 	static char cache[size];
 
-	// Ã¿´ÎÊ¹ÓÃÇ°Çå¿Õ»º³åÇø
+	// æ¯æ¬¡ä½¿ç”¨å‰æ¸…ç©ºç¼“å†²åŒº
 	std::fill(cache, cache + size, 0);
 
-	// Ğ´Èë´íÎóĞÅÏ¢²¢·µ»Ø
+	// å†™å…¥é”™è¯¯ä¿¡æ¯å¹¶è¿”å›
 	std::snprintf(cache, sizeof(cache), "%s, on line %d of %s\n", content, lineNumber, fileName);
 	return cache;
 }

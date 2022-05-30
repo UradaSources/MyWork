@@ -1,6 +1,8 @@
 #ifndef HEAD_FUNCTIONS
 #define HEAD_FUNCTIONS
 
+using uint8 = std::uint8_t;
+
 int Random(int max, int min);
 
 const char* _GenerateInfo(int lineNumber, const char* content, const char* fileName);

@@ -9,6 +9,7 @@
 #include <SDL2/SDL.h>
 
 #include "functions.hpp"
+#include "context.hpp"
 
 #define DEBUG
 
@@ -20,10 +21,10 @@ int main(int argc, char** argv)
 	{
 		Context& context = Context::GetInstance();
 		
-		SDL_Texture* s = IMG_LoadTexture(context._renderer(),  "./sprite.png");
+		SDL_Texture* s = IMG_LoadTexture(context._renderer(),  "./spriteSheet.png");
 		if (s == nullptr) throw std::runtime_error(SDLErrorInfo());
 
-		Sprite s1{ s, SDL_Rect{0,0,64,64} };
+		Sprite s1{ s, SDL_Rect{0,0,36,36} };
 
 		SDL_Event e;
 
@@ -54,8 +55,8 @@ int main(int argc, char** argv)
 				}
 			}
 
+			context.clear();
 			context.draw(s1, {x, y});
-
 			context.present();
 		}
 

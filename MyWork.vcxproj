@@ -127,6 +127,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalOptions> /utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,6 +145,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -159,7 +161,7 @@
     <ClCompile Include="context.cpp" />
     <ClCompile Include="function.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="unit.cpp" />
+    <ClCompile Include="sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="activeObject.hpp" />
@@ -167,11 +169,7 @@
     <ClInclude Include="context.hpp" />
     <ClInclude Include="functions.hpp" />
     <ClInclude Include="sprite.hpp" />
-    <ClInclude Include="unit.hpp" />
-    <ClInclude Include="vector2.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="sprite.png" />
+    <ClInclude Include="vec2.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

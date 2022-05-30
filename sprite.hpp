@@ -5,6 +5,7 @@
 
 #include <SDL.h>
 
+#include "vec2.hpp"
 #include "functions.hpp"
 
 class Sprite
@@ -14,20 +15,13 @@ private:
 	SDL_Rect m_rect;
 
 public:
-	Sprite(SDL_Texture* texture, SDL_Rect rect) :
-		m_texture(texture),
-		m_rect(rect) {}
-	Sprite(SDL_Texture* texture) :
-		m_texture(texture)
-	{
-		int w, h;
-		if (SDL_QueryTexture(m_texture, nullptr, nullptr, &w, &h))
-			throw std::runtime_error(SDLErrorInfo());
-		
-		m_rect = { 0, 0, w, h };
-	}
+	Sprite(SDL_Texture* texture, SDL_Rect rect);
+	Sprite(SDL_Texture* texture);
 
-	vector2i getSize() { return vector2i{ m_rect.w, m_rect.h }; }
+	Sprite(const Sprite&) = default;
+	Sprite& operator=(const Sprite&) = default;
+
+	vec2i getSize() { return vec2i{ m_rect.w, m_rect.h }; }
 
 	SDL_Texture* _texture() { return m_texture; }
 	const SDL_Rect* _src() const { return &m_rect; }

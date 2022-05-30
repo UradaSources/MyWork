@@ -30,7 +30,7 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="unit.cpp">
+    <ClCompile Include="sprite.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,19 +47,11 @@
     <ClInclude Include="functions.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="unit.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="vector2.hpp">
+    <ClInclude Include="vec2.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="sprite.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="sprite.png">
-      <Filter>资源文件</Filter>
-    </Image>
   </ItemGroup>
 </Project>

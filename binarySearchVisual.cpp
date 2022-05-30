@@ -6,104 +6,38 @@
 #include "binarySearchVisual.hpp"
 #include "functions.hpp"
 
-BinarySearchVisual::BinarySearchVisual(int viewportWidth, vector2i unitSpacing, Sprite& unitSprite) :
-	m_viewportWidth(viewportWidth),
-	m_unitSpacing(unitSpacing),
-	m_unitSprite(unitSprite),
-	m_first(0),
-	m_last(0),
-	m_expected(-1),
-	m_finish(false),
-	m_count(0) {}
-BinarySearchVisual::~BinarySearchVisual() {
-	this->freeUnits();
+const int UnitNumber = 20;
+
+BinarySearchVisual::BinarySearchVisual(int max, int min) :
+	m_units(20),
+	m_expected(0),
+	m_finish(true),
+	m_count(0)
+{
+	// é‡ç½®å•å…ƒå€¼ç»„ä¸æœç´¢å‚æ•°
+	this->reset(max, min);
 }
 
-void BinarySearchVisual::startSearch(int expected) {
-	// ÉèÖÃ²éÕÒµÄÄ¿±êÖµ
-	m_expected = expected;
-	// Í£Ö¹²éÕÒ±êÖ¾
-	m_finish = false;
+// å•æ­¥çš„è¿›è¡ŒäºŒåˆ†æŸ¥æ‰¾
+int BinarySearchVisual::binarySearchStep(bool& ref_succeed)
+{
+	if (m_low <= m_high)
+	{
+		int mid = (m_low + m_high) / 2;
 
-	// ³õÊ¼»¯²éÕÒµÄÎ»ÖÃ
-	m_first = 0;
-	m_last = m_units.size() - 1;
-}
-
-void BinarySearchVisual::initUnits(int unitNumber, int max, int min) {
-	// ÊÍ·Åµ¥Ôª²¢Çå¿ÕÁĞ±í
-	this->freeUnits();
-
-	// ÉèÖÃËæ»úÊıÖÖ×Ó
-	std::srand(std::time(0));
-
-	// ·ÖÅä¿Õ¼ä
-	m_units.reserve(unitNumber);
-
-	// Éú³ÉËùĞèÒªµÄËæ»úÊıÖµ
-	std::vector<int> randomValues;
-	randomValues.reserve(unitNumber);
-
-	for (int i = 0; i < unitNumber; i++) {
-		randomValues.at(i) = Random(max, min);
-	}
-
-	// ¶ÔÉú³ÉµÄËæ»úÊıÖµÅÅĞò
-	std::sort(randomValues.begin(), randomValues.end());
-
-	// ´¢´æµ¥ÔªµÄÎ»ÖÃ
-	vector2i position = { 0, 0 };
-
-	// ³õÊ¼»¯µ¥Ôª
-	for (int i = 0; i < unitNumber; i++) {
-		// ÉèÖÃ¸ñÊ½
-
-		// ½¥½øÊ½µÄ¼ÆËãµ¥ÔªµÄÎ»ÖÃ
-		int x = position.x + m_unitSprite.getSize().x + m_unitSpacing.x;
-		if (x > m_viewportWidth)
+		int value = m_units.at(mid);
+		if (value == m_expected)
 		{
-			x = 0;
-			position.y += m_unitSprite.getSize().y + m_unitSpacing.y;
-		}
-
-		position.x = x;
-
-		// ¾ÍµØ¹¹Ôìµ¥Ôª²¢¸³Öµ
-		m_units.emplace_back(new Unit(*this, position));
-		m_units.back()->init(i, randomValues.at(i));
-	}
-
-#ifdef DEBUG
-
-	for (int i = 0; i < m_units.size(); i++) {
-		auto gm = m_units.at(i);
-		std::printf("[%d](%d), ", gm->m_index, gm->m_value);
-	}
-	std::printf("\n");
-
-#endif  // DEBUG
-}
-void BinarySearchVisual::freeUnits() {
-	for (auto i : m_units)
-		delete i;
-	m_units.clear();
-}
-
-// ¶ş·Ö²éÕÒµ¥²½
-int BinarySearchVisual::binarySearchStep(bool& ref_succeed) {
-	if (m_first <= m_last) {
-		int mid = (m_first + m_last) / 2;
-
-		int value = m_units.at(mid)->getValue();
-		if (value == m_expected) {
 			ref_succeed = true;
 			return mid;
 		}
-		else if (value < m_expected) {
-			m_first = mid + 1;
+		else if (value < m_expected)
+		{
+			m_low = mid + 1;
 		}
-		else {
-			m_last = mid - 1;
+		else
+		{
+			m_high = mid - 1;
 		}
 
 		ref_succeed = false;
@@ -114,36 +48,73 @@ int BinarySearchVisual::binarySearchStep(bool& ref_succeed) {
 	return -1;
 }
 
-void BinarySearchVisual::update(float dt) {
-	if (m_finish)
-		return;
+// é‡ç½®æˆ–æ˜¯åˆå§‹åŒ–å•å…ƒç»„
+// å•å…ƒç»„å°†é€’å¢æ’åˆ—
+void BinarySearchVisual::reset(int max, int min) {
+	// è®¾ç½®éšæœºæ•°ç§å­
+	std::srand(std::time(0));
 
-	// ÀÛ¼Ó¼ÆÊ±Æ÷
-	m_count += dt;
-	if (m_count >= BinarySearchVisual::Interval) {
-		// Çå¿Õ¼ÆÊ±Æ÷
+	// ç”Ÿæˆæ‰€éœ€è¦çš„éšæœºæ•°å€¼
+	for (int i = 0; i < m_units.size(); i++) {
+		m_units[i] = Random(max, min);
+	}
+
+	// å¯¹ç”Ÿæˆçš„éšæœºæ•°å€¼æ’åº
+	std::sort(m_units.begin(), m_units.end());
+
+	// é‡ç½®æœç´¢å‚æ•°
+	m_low = 0;
+	m_high = m_units.size() - 1;
+
+	m_expected = 0;
+	m_finish = true;
+}
+
+// å¼€å§‹æŸ¥æ‰¾æœŸæœ›å€¼, è°ƒç”¨å‰éœ€è¦å…ˆä½¿ç”¨reseté‡ç½®æˆ–æ˜¯åˆå§‹åŒ–æ•°ç»„å•å…ƒ
+// æ³¨æ„, åœ¨æŸ¥æ‰¾æœŸé—´è°ƒç”¨æ­¤å‡½æ•°å°†å¯¼è‡´æŸ¥æ‰¾åœ¨è®¾ç½®æ–°çš„æœŸæœ›å€¼åé‡æ–°å¼€å§‹
+void BinarySearchVisual::startSearch(int expected)
+{
+	m_low = 0;
+	m_high = m_units.size() - 1;
+
+	// è®¾ç½®æŸ¥æ‰¾çš„ç›®æ ‡å€¼
+	m_expected = expected;
+	m_finish = false;
+}
+
+// å¯è§†åŒ–å™¨ä½¿ç”¨ç‹¬ç«‹çš„è®¡æ—¶å™¨ä½¿æŸ¥æ‰¾è¿‡ç¨‹ç‹¬ç«‹äºå¸§ç‡
+void BinarySearchVisual::update(float dt)
+{
+	// æŸ¥æ‰¾è¿‡ç¨‹
+	if (m_finish) m_count += dt;
+	if (m_count >= BinarySearchVisual::Interval)
+	{
+		// æ¸…ç©ºè®¡æ—¶å™¨
 		m_count = 0;
 
-		std::printf("³ÖĞø²éÕÒÖĞ, begin(%d), end(%d)\n", m_first, m_last);
+		std::printf("æŒç»­æŸ¥æ‰¾ä¸­, begin(%d), end(%d)\n", m_low, m_high);
 
-		// µ¥²½ÔËĞĞ¶ş·Ö²éÕÒËã·¨
+		// å•æ­¥è¿è¡ŒäºŒåˆ†æŸ¥æ‰¾ç®—æ³•
 		bool succeed = false;
-		int newMid = this->binarySearchStep(succeed);
+		int mid = this->binarySearchStep(succeed);
 
-		// ²éÕÒ³É¹¦
+		// æŸ¥æ‰¾æˆåŠŸ
 		if (succeed) {
-			std::printf("²éÕÒ³É¹¦, ÔÚ%d\n", newMid);
+			std::printf("æŸ¥æ‰¾æˆåŠŸ, åœ¨%d\n", mid);
 			m_finish = true;
 		}
-		else if (newMid < 0)  // ²éÕÒÊ§°Ü
+		else if (mid < 0)  // æŸ¥æ‰¾å¤±è´¥
 		{
-			std::printf("²éÕÒÊ§°Ü, Í£ÁôÔÚ%d\n", newMid);
+			std::printf("æŸ¥æ‰¾å¤±è´¥, åœç•™åœ¨%d\n", mid);
 			m_finish = true;
 		}
 		else {
-			// ÉèÖÃµ¥Ôª×´Ì¬
-			std::printf("³ÖĞø²éÕÒ, Í£ÁôÔÚ%d\n", newMid);
+			// è®¾ç½®å•å…ƒçŠ¶æ€
+			std::printf("æŒç»­æŸ¥æ‰¾, åœç•™åœ¨%d\n", mid);
 			return;
 		}
 	}
+
+	// ç»˜åˆ¶æŸ¥æ‰¾ç»“æœ
+
 }

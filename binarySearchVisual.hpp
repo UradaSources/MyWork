@@ -5,56 +5,55 @@
 
 #include <SDL2/SDL.h>
 
-#include "unit.hpp"
+// #include "unit.hpp"
 #include "sprite.hpp"
-#include "vector2.hpp"
+#include "vec2.hpp"
 
-// ¶ş·Ö²éÕÒËã·¨µÄ¿ÉÊÓ»¯
+// äºŒåˆ†æŸ¥æ‰¾ç®—æ³•çš„å¯è§†åŒ–
 class BinarySearchVisual
 {
 private:
-	// µ¥ÔªÁĞ±í
-	std::vector<Unit*> m_units;
+	// æ•°å€¼åˆ—è¡¨
+	std::vector<int> m_units;
 
-	// ²éÕÒÇ°ºóÁ½¶ËµÄË÷Òı
-	int m_first, m_last;
+	// æŸ¥æ‰¾å‰åä¸¤ç«¯çš„ç´¢å¼•
+	int m_low, m_high;
 
-	// ²éÕÒÄ¿±ê
+	// æŸ¥æ‰¾ç›®æ ‡
 	int m_expected;
-	// Ö¸Ê¾ÊÇ·ñ²éÕÒÍê±Ï
+	// æŒ‡ç¤ºæ˜¯å¦æŸ¥æ‰¾å®Œæ¯•
 	bool m_finish;
 
-	// ·ÇÖ¡Í¬²½µÄÊ±¼ä¼ä¸ô
+	// éå¸§åŒæ­¥çš„æ—¶é—´é—´éš”
 	const float Interval = 0.5f;
 	float m_count;
 
-	// ¿ÉÊÓ»¯²ÎÊı
-	int m_viewportWidth;
-	vector2i m_unitSpacing;
+	// å•å…ƒå’Œç®­å¤´ç²¾çµ
+	//Sprite m_unitSprite;
+	//Sprite m_upArrowSprite, downArrowSprite;
 
-	// »æÖÆµ¥ÔªËùÒªÓÃµÄ¾«Áé
-	Sprite& m_unitSprite;
+private:
+	// äºŒåˆ†æŸ¥æ‰¾å•æ­¥
+	int binarySearchStep(bool& ref_succeed);
+
+	// å°†ç»˜åˆ¶ç‰¹å®šçš„å•å…ƒåˆ°å±å¹•ä¸Š
+	// void drawUnit(int index, SDL_Color color);
 
 public:
-	BinarySearchVisual(int viewportWidth, vector2i unitSpacing, Sprite& unitSprite);
-	~BinarySearchVisual();
+	// ç»˜åˆ¶å‚æ•°ç¡¬ç¼–ç 
+	BinarySearchVisual(int max, int min);
+	~BinarySearchVisual() = default;
 
 	BinarySearchVisual(const BinarySearchVisual&) = delete;
 	BinarySearchVisual& operator=(const BinarySearchVisual&) = delete;
 
-	// Éè¶¨ËÑË÷²ÎÊı²¢¿ªÊ¼ËÑË÷
+	// é‡ç½®å•ä½ç»„
+	void reset(int max, int min);
+
+	// è®¾å®šæœç´¢å‚æ•°å¹¶å¼€å§‹æœç´¢
 	void startSearch(int expected);
 
-	// ³õÊ¼»¯µ¥Î»×é
-	void initUnits(int unitNumber, int max, int min);
-	void freeUnits();
-
-	// ¶ş·Ö²éÕÒµ¥²½
-	int binarySearchStep(bool& ref_succeed);
-
 	virtual void update(float dt);
-
-	Sprite& getUnitSprite() { return m_unitSprite; }
 };
 
 #endif  // !HEAD_BINARY_SEARCH_VISUAL
