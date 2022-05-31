@@ -1,6 +1,10 @@
 #ifndef HEAD_FUNCTIONS
 #define HEAD_FUNCTIONS
 
+#include <memory>
+
+#include <SDL.h>
+
 using uint8 = std::uint8_t;
 
 int Random(int max, int min);

@@ -33,6 +33,12 @@
     <ClCompile Include="sprite.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="arrows.hpp">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="arrows.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="activeObject.hpp">

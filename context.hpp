@@ -8,6 +8,8 @@
 #include "vec2.hpp"
 #include "functions.hpp"
 
+using SDLTexture = std::shared_ptr<SDL_Texture>;
+
 class Context
 {
 public:
@@ -26,6 +28,9 @@ private:
 public:
 	Context(const Context&) = delete;
 	Context& operator=(const Context&) = delete;
+
+	// 从文件加载纹理
+	SDLTexture loadTextureFromFile(const char* filePath);
 
 	// 清屏
 	void clear();

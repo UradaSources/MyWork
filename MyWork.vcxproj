@@ -157,6 +157,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="activeObject.cpp" />
+    <ClCompile Include="arrows.cpp" />
+    <ClCompile Include="arrows.hpp" />
     <ClCompile Include="binarySearchVisual.cpp" />
     <ClCompile Include="context.cpp" />
     <ClCompile Include="function.cpp" />

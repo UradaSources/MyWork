@@ -4,6 +4,7 @@
 #include <ctime>
 #include <list>
 #include <stdexcept>
+#include <memory>
 #include <vector>
 
 #include <SDL2/SDL.h>
@@ -20,11 +21,11 @@ int main(int argc, char** argv)
 	try
 	{
 		Context& context = Context::GetInstance();
-		
-		SDL_Texture* s = IMG_LoadTexture(context._renderer(),  "./spriteSheet.png");
-		if (s == nullptr) throw std::runtime_error(SDLErrorInfo());
 
-		Sprite s1{ s, SDL_Rect{0,0,36,36} };
+		SDL_Texture* raw = IMG_LoadTexture(context._renderer(), "./spriteSheet.png");
+		std::shared_ptr<SDL_Texture> ptr(raw, SDL_DestroyTexture);
+
+		Sprite s1{ ptr.get(), SDL_Rect{0,0,36,36} };
 
 		SDL_Event e;
 

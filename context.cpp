@@ -42,6 +42,14 @@ Context::~Context()
 	SDL_Quit();
 }
 
+SDLTexture Context::loadTextureFromFile(const char* filePath)
+{
+	SDL_Texture* ptr = IMG_LoadTexture(m_renderer, filePath);
+	if (!ptr) throw std::runtime_error(IMG_GetError());
+
+	return SDLTexture(ptr, SDL_DestroyTexture);
+}
+
 void Context::setDrawColor(uint8 r, uint8 g, uint8 b, uint8 a)
 {
 	SDL_SetRenderDrawColor(m_renderer, r, g, b, a);
