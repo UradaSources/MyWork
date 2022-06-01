@@ -42,9 +42,12 @@ public:
 	}
 
 	// 重置指针
-	void resetPointerView()
+	void resetPointer()
 	{
-		
+		m_low = 0;
+		m_high = BackgroundView::GetInstance().getValueNumber() - 1;
+
+
 	}
 
 	virtual void start() {}
@@ -120,6 +123,8 @@ public:
 		m_target = target;
 	}
 
+	int getValueNumber()const { return m_values.size(); }
+
 	// 查询特定方框的定位点
 	vec2i queryBoxLocalPosition(int index)
 	{
@@ -158,8 +163,10 @@ public:
 	}
 };
 
-
 // 二分查找算法的可视化
+
+// 这些low high应该都有visual保存, 
+
 class BinarySearchVisualModel: public ActiveObject
 {
 private:
