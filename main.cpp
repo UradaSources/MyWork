@@ -7,7 +7,7 @@
 #include <memory>
 #include <vector>
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include "functions.hpp"
 #include "context.hpp"

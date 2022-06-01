@@ -9,12 +9,11 @@
 
 const int UnitNumber = 20;
 
-BinarySearchVisual::BinarySearchVisual(int number, Sprite box, Arrows& lowArrows, Arrows& highArrows, Arrows& midArrows):
+BinarySearchVisual::BinarySearchVisual(int number, Sprite box) :
 	m_units(number),
 	m_expected(0), m_finish(true), m_succeed(false),
 	m_low(-1), m_high(-1), m_mid(-1),
-	m_box(box),
-	m_lowArrows(lowArrows), m_highArrow(highArrows), m_midArrows(midArrows) {}
+	m_box(box) {}
 
 void BinarySearchVisual::updatePointer()
 {
@@ -110,23 +109,11 @@ void BinarySearchVisual::update(float dt)
 	}
 
 	// 按既定帧率进行绘制
-
-	vec2i position{0,0};
-
-	// 绘制所有的方框
+	
+	// 绘制背景方框
 	for (int i =0; i < m_units.size(); i++)
 	{
-		int value = m_units.at(i);
 		
-		SDL_Color color = {1,1,1,1};
-
-		// 首定位点方框绘制为蓝色
-		if (i == m_low)
-			color = { 0, 1, 1, 1 };
-		else if (i == m_high)
-			color = { 1,0,0,1 };
-		
-
 
 	}
 	

@@ -1,6 +1,8 @@
 #ifndef HEAD_CONTEXT
 #define HEAD_CONTEXT
 
+#include <string>
+
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -38,12 +40,16 @@ public:
 	void present();
 
 	// 设置绘制颜色
+	void setDrawColor(SDL_Color color);
 	void setDrawColor(uint8 r, uint8 g, uint8 b, uint8 a = 255);
 
 	// 在屏幕特定位置绘制精灵
 	void draw(Sprite sprite, vec2i position);
 	// 以特定大小在屏幕特定位置上绘制精灵
 	void draw(Sprite sprite, vec2i position, vec2i size);
+
+	// 绘制文本
+	void drawNumberText(int number, vec2i position);
 
 	SDL_Renderer* _renderer() { return m_renderer; }
 };
